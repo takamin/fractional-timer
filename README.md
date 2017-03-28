@@ -38,6 +38,11 @@ Both of above exported functions are almost same to the standard version
 provided except for that the delay duration of `setInterval` could be
 set as less than a milliseconds.
 
+CHANGES
+-------
+
+* v1.0.1 - Fix the bug that could not work on web-browser. issue#1
+
 LICENSE
 -------
 
