@@ -1,4 +1,4 @@
-(() => {
+(function() {
     "use strict";
     function FractionalTimer() {
         this._numOfTimer = 1;
@@ -38,7 +38,7 @@
         this._count = 0;
         this._tickEnd = (new Date()).getTime();
         for(let i = 0; i < this._numOfTimer; i++) {
-            this._timerIds.push(setInterval(() => {
+            this._timerIds.push(setInterval(function(){
                 if(this._timerIds == null) {
                     return;
                 }
@@ -131,8 +131,15 @@
     FractionalTimer.clearInterval = function(ftid) {
         ftid.stop();
     };
-    module.exports = {
-        setInterval: FractionalTimer.setInterval,
-        clearInterval: FractionalTimer.clearInterval
-    };
+    try {
+        module.exports = {
+            setInterval: FractionalTimer.setInterval,
+            clearInterval: FractionalTimer.clearInterval
+        };
+    } catch(err) {
+        // For the Web browser, Export the class to global object
+        (function(g) {
+            g.FractionalTimer = FractionalTimer;
+        }(Function("return this;")()));
+    }
 }());
