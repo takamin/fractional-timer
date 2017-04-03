@@ -1,4 +1,9 @@
-var ft = FractionalTimer;
+var ft = null;
+(function(g) {
+    if("FractionalTimer" in g) {
+        ft = g["FractionalTimer"];
+    }
+}(Function("return this;")()));
 var target_time_sec = 10;
 var delayMilli = 0.001;
 
@@ -27,7 +32,7 @@ function btnStart_click() {
     stop();
     t0 = t1 = tick();
     txtStatus.innerHTML = "Count " + target_time_sec + " [s]...";
-    ftid = ft.setInterval(()=>{
+    ftid = ft.setInterval(function() {
         counter++;
         if(counter >= maxCounter) {
             showStatus();
@@ -48,9 +53,9 @@ function stop() {
 function showStatus() {
     if(ftid != null) {
         t1 = tick();
-        let actual_time_sec = (t1 - t0)/1000;
-        let current_target_sec = target_time_sec * counter / maxCounter;
-        let error = Math.round(100000 * current_target_sec / actual_time_sec) / 1000;
+        var actual_time_sec = (t1 - t0)/1000;
+        var current_target_sec = target_time_sec * counter / maxCounter;
+        var error = Math.round(100000 * current_target_sec / actual_time_sec) / 1000;
         txtStatus.innerHTML =
             "Counter " + counter + "/" + maxCounter + " " +
             "Elapse " + actual_time_sec + "[s], error = " + error + "%";
