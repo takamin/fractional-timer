@@ -41,6 +41,7 @@ set as less than a milliseconds.
 CHANGES
 -------
 
+* v1.0.2 - Remove the harmony features that uglify-js does not support.
 * v1.0.1 - Fix the bug that could not work on web-browser. issue#1
 
 LICENSE

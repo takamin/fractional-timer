@@ -18,13 +18,13 @@
         });
     };
     FractionalTimer.prototype.setTimerInterval = function(value) {
-        this.updateTimer(() => this._delay = value );
+        this.updateTimer(function() { this._delay = value; } );
     };
     FractionalTimer.prototype.setProcCount = function(value) {
-        this.updateTimer(() => this._iteration = value );
+        this.updateTimer(function() { this._iteration = value; } );
     };
     FractionalTimer.prototype.setProc = function(func) {
-        this.updateTimer(() => this._func = func );
+        this.updateTimer(function() { this._func = func; } );
     };
     FractionalTimer.prototype.isRunning = function() {
         return this._timerIds != null;
@@ -37,12 +37,12 @@
         this._tickStart = (new Date()).getTime();
         this._count = 0;
         this._tickEnd = (new Date()).getTime();
-        for(let i = 0; i < this._numOfTimer; i++) {
+        for(var i = 0; i < this._numOfTimer; i++) {
             this._timerIds.push(setInterval(function(){
                 if(this._timerIds == null) {
                     return;
                 }
-                for(let ii = 0; ii < this._iteration; ii++) {
+                for(var ii = 0; ii < this._iteration; ii++) {
                     if(this._timerIds != null) {
                         this._count++;
                         this._func();
@@ -56,7 +56,7 @@
             return;
         }
         this._tickEnd = (new Date()).getTime();
-        this._timerIds.forEach(tid => clearInterval(tid) );
+        this._timerIds.forEach(function(tid) { clearInterval(tid); } );
         this._timerIds = null;
     };
     FractionalTimer.prototype.getElapse = function() {
@@ -66,16 +66,16 @@
         return this._calcFreq;
     };
     FractionalTimer.prototype.getActualFreq = function() {
-        let elapse = this.getElapse();
+        var elapse = this.getElapse();
         if(elapse == 0) {
             return null;
         }
         return this._count / (elapse / 1000);
     };
     FractionalTimer.prototype.getStat = function () {
-        let calcFreq = this.getCalculatedFreq();
-        let elapse = this.getElapse();
-        let actualFreq = this.getActualFreq();
+        var calcFreq = this.getCalculatedFreq();
+        var elapse = this.getElapse();
+        var actualFreq = this.getActualFreq();
         return {
             parameter: {
                 numOfTimer: this._numOfTimer,
@@ -91,7 +91,7 @@
         };
     };
     FractionalTimer.prototype.updateTimer = function(modifier) {
-        let timer_was_running = this.isRunning();
+        var timer_was_running = this.isRunning();
         if(timer_was_running) {
             this.stop();
         }
@@ -109,7 +109,7 @@
         numOfTimer = numOfTimer || 0;
         iteration = iteration || 0;
         if(numOfTimer == 0 && iteration == 0) {
-            let freq = 1.0 / interval;
+            var freq = 1.0 / interval;
             while((interval * ++numOfTimer) < 20) {
                 ;
             }
@@ -120,7 +120,7 @@
             }
             numOfTimer = Math.round(numOfTimer / iteration);
         }
-        let ftid = new FractionalTimer();
+        var ftid = new FractionalTimer();
         ftid.setProc(proc);
         ftid.setNumOfTimer(numOfTimer);
         ftid.setTimerInterval(interval);
