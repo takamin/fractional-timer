@@ -109,7 +109,6 @@
         numOfTimer = numOfTimer || 0;
         iteration = iteration || 0;
         if(numOfTimer == 0 && iteration == 0) {
-            var freq = 1.0 / interval;
             while((interval * ++numOfTimer) < 20) {
                 ;
             }
